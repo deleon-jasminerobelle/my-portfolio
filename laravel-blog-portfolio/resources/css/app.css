@@ -1,0 +1,10 @@
+@import "tailwindcss";
+
+@theme {
+  --color-crimson: #DC143C;
+  --color-crimson-light: #E7546E;
+  --color-crimson-dark: #A10E2F;
+  --color-black: #000000;
+  --color-white: #FFFFFF;
+  --font-family-sans: 'Nunito', sans-serif;
+}
