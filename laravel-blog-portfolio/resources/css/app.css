@@ -1,10 +1,106 @@
-@import "tailwindcss";
+/* Reset and base styles */
+body {
+    margin: 0;
+    font-family: 'Inter', sans-serif;
+    background-color: #d1d5db; /* gray-300 */
+    color: #000000;
+}
 
-@theme {
-  --color-crimson: #DC143C;
-  --color-crimson-light: #E7546E;
-  --color-crimson-dark: #A10E2F;
-  --color-black: #000000;
-  --color-white: #FFFFFF;
-  --font-family-sans: 'Nunito', sans-serif;
+/* Navigation button */
+nav button {
+    background-color: #000000;
+    border-radius: 0.25rem;
+    width: 2.5rem;
+    height: 2.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Hero section */
+section.hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    background-color: #d1d5db; /* gray-300 */
+    overflow: hidden;
+}
+
+.hero-container {
+    max-width: 112rem; /* 7xl */
+    margin: 0 auto;
+    padding: 0 2rem;
+    display: flex;
+    width: 100%;
+    align-items: center;
+}
+
+.hero-image {
+    width: 50%;
+    padding-right: 3rem;
+}
+
+.hero-image img {
+    border-radius: 0.5rem;
+    box-shadow: 0 10px 15px rgba(0,0,0,0.1);
+    display: block;
+    margin: 0 auto;
+}
+
+.hero-text {
+    width: 50%;
+    padding-left: 3rem;
+}
+
+.hero-text h1 {
+    font-size: 5rem;
+    font-weight: 800;
+    margin-bottom: 1rem;
+    line-height: 1.1;
+    letter-spacing: -0.05em;
+}
+
+.hero-text p.subtitle {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+
+.hero-text p.description {
+    font-size: 1rem;
+    max-width: 36rem;
+    line-height: 1.5;
+}
+
+/* Utility classes */
+.text-black {
+    color: #000000;
+}
+
+.font-extrabold {
+    font-weight: 800;
+}
+
+.font-semibold {
+    font-weight: 600;
+}
+
+.mb-4 {
+    margin-bottom: 1rem;
+}
+
+.mb-8 {
+    margin-bottom: 2rem;
+}
+
+.leading-tight {
+    line-height: 1.1;
+}
+
+.leading-relaxed {
+    line-height: 1.5;
+}
+
+.tracking-tight {
+    letter-spacing: -0.05em;
 }
