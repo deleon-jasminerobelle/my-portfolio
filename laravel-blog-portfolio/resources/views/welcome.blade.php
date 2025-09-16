@@ -44,6 +44,7 @@
             75% { transform: rotateY(270deg) rotateX(45deg) translateX(-10px) scale(1.05); }
             100% { transform: rotateY(360deg) rotateX(0deg) translateX(0px) scale(1); }
         }
+
     </style>
 </head>
 <body class="bg-black text-white font-sans overflow-x-hidden">
@@ -75,7 +76,7 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 relative z-10">
             <div class="text-center animate-fade-in">
                 <h1 class="text-6xl md:text-8xl font-extrabold text-white mb-6 text-shadow">
-                    Hi, I'm <a href="#" class="text-crimson">Jasmine Robelle De Leon</a>
+                    Hi, I'm <span id="typed-name" class="text-crimson"></span>
                 </h1>
                 <p class="text-xl md:text-3xl text-gray-300 mb-8 max-w-4xl mx-auto leading-relaxed">
                     A passionate <span class="text-crimson font-semibold">Full-Stack Developer</span> crafting digital experiences that matter
@@ -347,6 +348,21 @@
                     behavior: 'smooth'
                 });
             });
+        });
+
+        // Typing effect for name
+        document.addEventListener('DOMContentLoaded', function() {
+            const typedName = document.getElementById('typed-name');
+            const name = 'Jasmine Robelle De Leon';
+            let i = 0;
+            function typeWriter() {
+                if (i < name.length) {
+                    typedName.innerHTML += name.charAt(i);
+                    i++;
+                    setTimeout(typeWriter, 100);
+                }
+            }
+            setTimeout(typeWriter, 1000);
         });
     </script>
 </body>

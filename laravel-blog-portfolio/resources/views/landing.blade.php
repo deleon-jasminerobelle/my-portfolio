@@ -4,244 +4,346 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>JRD - Portfolio</title>
-    @import url('https://fonts.googleapis.com/css?family=Audiowide');
+    <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <style>
+        *, *::before, *::after {
+            padding: 0;
+            margin: 0 auto;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --perspectivOriginY: 25%;
+        }
+
         body {
+            font-family: 'Anton', sans-serif;
+            background-color: #151515;
+            color: #aaa;
+            min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
-            perspective: 1000px;
-            background: radial-gradient(circle, rgba(0,0,0,1) 0%, rgba(20,20,20,1) 50%, rgba(0,0,0,1) 100%);
             overflow: hidden;
-            margin: 0;
-            padding: 0;
+            transition: opacity 1s;
         }
 
+        body.fade-out {
+            opacity: 0;
+        }
 
-
-        #backdrop {
+        .wireframe_input {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            z-index: -1;
+            top: -100%;
+            left: -100%;
+            visibility: hidden;
         }
 
-        @keyframes spin {
-            0% {
-                transform: rotateY(0deg) rotateX(0deg);
-            }
-            25% {
-                transform: rotateY(90deg) rotateX(45deg);
-            }
-            50% {
-                transform: rotateY(180deg) rotateX(90deg);
-            }
-            75% {
-                transform: rotateY(270deg) rotateX(135deg);
-            }
-            100% {
-                transform: rotateY(360deg) rotateX(180deg);
-            }
+        .wireframe_input:checked + .wireframe_label {
+            color: chartreuse;
         }
 
-        #cube {
-            position: relative;
-            width: 300px;
-            height: 300px;
-            animation: 120s spin infinite linear;
-            transform-style: preserve-3d;
-            cursor: pointer;
-            box-shadow: 0 0 50px rgba(255,255,255,0.3);
+        .wireframe_input:checked + .wireframe_label::before {
+            background-color: chartreuse;
         }
 
-        #cube .side {
-            box-sizing: border-box;
+        .wireframe_input:checked ~ .towerOuter > .tower > .card,
+        .wireframe_input:checked ~ .towerOuter > .tower > .card::after {
+            background-image: unset;
+            box-shadow: 0 0 1px 1px #fff inset;
+        }
+
+        .center-letter {
             position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-size: 100px;
+            font-weight: bold;
+            z-index: 4;
+            pointer-events: none;
+            display: none;
+        }
+
+        .wireframe_input:checked ~ .towerOuter .center-letter {
+            display: block;
+            -webkit-text-stroke: 2px #fff;
+            color: transparent;
+        }
+
+        .wireframe_label {
+            position: fixed;
+            top: 0%;
+            left: 0%;
+            font-size: 20px;
+            padding: 0.5em;
+            z-index: 3;
+            transition: color 0.25s;
+        }
+
+        .wireframe_label::before {
+            content: '';
+            display: inline-block;
+            width: 0.75em;
+            height: 0.75em;
+            margin-right: 0.25em;
+            background-color: maroon;
+            border-radius: 0.25em;
+            border: 2px solid #aaa;
+            transition: background-color 0.25s;
+        }
+
+        .hoverPad {
+            position: absolute;
+            z-index: 2;
             width: 100%;
-            height: 100%;
-            border: 30px solid white;
+            height: 10%;
         }
 
-        #cube #front {
-            transform: translateZ(150px);
-            background: rgba(0, 0, 0, 0.5);
+        .hoverPad:nth-child(3) {
+            top: 0%;
         }
 
-        #cube #back {
-            transform: translateZ(-150px);
-            background: rgba(0, 0, 0, 0.5);
+        .hoverPad:nth-child(3):hover ~ .towerOuter {
+            --perspectivOriginY: 15%;
         }
 
-        #cube #top {
-            transform: translateY(-150px) rotateX(-90deg);
-            background: rgba(0, 0, 0, 0.5);
+        .hoverPad:nth-child(4) {
+            top: 10%;
         }
 
-        #cube #bottom {
-            transform: translateY(150px) rotateX(90deg);
-            background: rgba(0, 0, 0, 0.5);
+        .hoverPad:nth-child(4):hover ~ .towerOuter {
+            --perspectivOriginY: 20%;
         }
 
-        #cube #left {
-            transform: translateX(-150px) rotateY(-90deg);
-            background: rgba(0, 0, 0, 0.5);
+        .hoverPad:nth-child(5) {
+            top: 20%;
         }
 
-        #cube #right {
-            transform: translateX(150px) rotateY(90deg);
-            background: rgba(0, 0, 0, 0.5);
+        .hoverPad:nth-child(5):hover ~ .towerOuter {
+            --perspectivOriginY: 25%;
+        }
+
+        .hoverPad:nth-child(6) {
+            top: 30%;
+        }
+
+        .hoverPad:nth-child(6):hover ~ .towerOuter {
+            --perspectivOriginY: 30%;
+        }
+
+        .hoverPad:nth-child(7) {
+            top: 40%;
+        }
+
+        .hoverPad:nth-child(7):hover ~ .towerOuter {
+            --perspectivOriginY: 35%;
+        }
+
+        .hoverPad:nth-child(8) {
+            top: 50%;
+        }
+
+        .hoverPad:nth-child(8):hover ~ .towerOuter {
+            --perspectivOriginY: 40%;
+        }
+
+        .hoverPad:nth-child(9) {
+            top: 60%;
+        }
+
+        .hoverPad:nth-child(9):hover ~ .towerOuter {
+            --perspectivOriginY: 45%;
+        }
+
+        .hoverPad:nth-child(10) {
+            top: 70%;
+        }
+
+        .hoverPad:nth-child(10):hover ~ .towerOuter {
+            --perspectivOriginY: 50%;
+        }
+
+        .hoverPad:nth-child(11) {
+            top: 80%;
+        }
+
+        .hoverPad:nth-child(11):hover ~ .towerOuter {
+            --perspectivOriginY: 55%;
+        }
+
+        .hoverPad:nth-child(12) {
+            top: 90%;
+        }
+
+        .hoverPad:nth-child(12):hover ~ .towerOuter {
+            --perspectivOriginY: 60%;
+        }
+
+        .towerOuter {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            perspective: 700px;
+            perspective-origin: center var(--perspectivOriginY);
+            transition: perspective-origin 0.25s;
+        }
+
+        .tower {
+            position: absolute;
+            top: 50%; left: 50%;
+            width: 50px;
+            transform-style: preserve-3d;
+            animation: towerRotate 60s infinite linear;
+        }
+
+        @keyframes towerRotate {
+            from { transform: translateX(-50%) rotateY(0deg); }
+            to { transform: translateX(-50%) rotateY(360deg); }
+        }
+
+        .card {
+            position: absolute;
+            width: 50px;
+            height: 70px;
+            background-image: url('https://assets.codepen.io/1948355/cardsheet01.jpg');
+            background-size: 650px 280px;
+            border-radius: 8px;
+            transform-style: preserve-3d;
+            box-shadow: 0 0 10px #0007 inset;
+            backface-visibility: hidden;
+        }
+
+        .card::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 50px;
+            height: 70px;
+            transform: rotateY(180deg);
+            backface-visibility: hidden;
+            background-image: url('https://assets.codepen.io/1948355/cardback01.jpg');
+            background-size: 50px 70px;
+            border: 1px solid #fff7;
+            border-radius: 8px;
+        }
+
+        .shadow {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%) rotateX(-90deg) translateZ(131px);
+            width: 630px;
+            height: 630px;
+            background-image: radial-gradient(#0000, #000 210px, #0000 315px);
         }
     </style>
 </head>
 <body>
-    <canvas id="backdrop"></canvas>
-    <div id="cube">
-        <canvas id="front" class="side" width="300" height="300"></canvas>
-        <canvas id="back" class="side" width="300" height="300"></canvas>
-        <canvas id="top" class="side" width="300" height="300"></canvas>
-        <canvas id="bottom" class="side" width="300" height="300"></canvas>
-        <canvas id="left" class="side" width="300" height="300"></canvas>
-        <canvas id="right" class="side" width="300" height="300"></canvas>
+    <input type="checkbox" id="wf" class="wireframe_input">
+    <label for="wf" class="wireframe_label"></label>
+
+    <div class="hoverPad"></div>
+    <div class="hoverPad"></div>
+    <div class="hoverPad"></div>
+    <div class="hoverPad"></div>
+    <div class="hoverPad"></div>
+    <div class="hoverPad"></div>
+    <div class="hoverPad"></div>
+    <div class="hoverPad"></div>
+    <div class="hoverPad"></div>
+    <div class="hoverPad"></div>
+
+    <div class="towerOuter">
+        <div class="tower">
+            <div class="card"></div><div class="card"></div><div class="card"></div><div class="card"></div><div class="card"></div><div class="card"></div>
+            <div class="card"></div><div class="card"></div><div class="card"></div><div class="card"></div><div class="card"></div><div class="card"></div>
+            <div class="card"></div><div class="card"></div><div class="card"></div><div class="card"></div><div class="card"></div><div class="card"></div>
+            <div class="card"></div><div class="card"></div><div class="card"></div><div class="card"></div><div class="card"></div><div class="card"></div>
+            <div class="card"></div><div class="card"></div><div class="card"></div><div class="card"></div><div class="card"></div><div class="card"></div>
+            <div class="card"></div><div class="card"></div><div class="card"></div><div class="card"></div><div class="card"></div><div class="card"></div>
+            <div class="card"></div><div class="card"></div><div class="card"></div><div class="card"></div><div class="card"></div><div class="card"></div>
+            <div class="card"></div><div class="card"></div><div class="card"></div><div class="card"></div><div class="card"></div><div class="card"></div>
+            <div class="card"></div><div class="card"></div><div class="card"></div><div class="card"></div><div class="card"></div><div class="card"></div>
+            <div class="card"></div><div class="card"></div><div class="card"></div><div class="card"></div><div class="card"></div><div class="card"></div>
+            <div class="card"></div><div class="card"></div><div class="card"></div><div class="card"></div><div class="card"></div><div class="card"></div>
+            <div class="card"></div><div class="card"></div><div class="card"></div><div class="card"></div><div class="card"></div><div class="card"></div>
+
+            <div class="card"></div><div class="card"></div><div class="card"></div><div class="card"></div><div class="card"></div><div class="card"></div>
+            <div class="card"></div><div class="card"></div><div class="card"></div><div class="card"></div><div class="card"></div><div class="card"></div>
+            <div class="card"></div><div class="card"></div><div class="card"></div><div class="card"></div><div class="card"></div><div class="card"></div>
+            <div class="card"></div><div class="card"></div><div class="card"></div><div class="card"></div><div class="card"></div><div class="card"></div>
+            <div class="card"></div><div class="card"></div><div class="card"></div><div class="card"></div><div class="card"></div><div class="card"></div>
+            <div class="card"></div><div class="card"></div><div class="card"></div><div class="card"></div><div class="card"></div><div class="card"></div>
+            <div class="card"></div><div class="card"></div><div class="card"></div><div class="card"></div><div class="card"></div><div class="card"></div>
+            <div class="card"></div><div class="card"></div><div class="card"></div><div class="card"></div><div class="card"></div><div class="card"></div>
+            <div class="card"></div><div class="card"></div><div class="card"></div><div class="card"></div><div class="card"></div><div class="card"></div>
+            <div class="card"></div><div class="card"></div><div class="card"></div><div class="card"></div><div class="card"></div><div class="card"></div>
+            <div class="card"></div><div class="card"></div><div class="card"></div><div class="card"></div><div class="card"></div><div class="card"></div>
+            <div class="card"></div><div class="card"></div><div class="card"></div><div class="card"></div><div class="card"></div><div class="card"></div>
+
+            <div class="card"></div><div class="card"></div><div class="card"></div><div class="card"></div><div class="card"></div><div class="card"></div>
+            <div class="card"></div><div class="card"></div><div class="card"></div><div class="card"></div><div class="card"></div><div class="card"></div>
+            <div class="card"></div><div class="card"></div><div class="card"></div><div class="card"></div><div class="card"></div><div class="card"></div>
+            <div class="card"></div><div class="card"></div><div class="card"></div><div class="card"></div><div class="card"></div><div class="card"></div>
+            <div class="card"></div><div class="card"></div><div class="card"></div><div class="card"></div><div class="card"></div><div class="card"></div>
+            <div class="card"></div><div class="card"></div><div class="card"></div><div class="card"></div><div class="card"></div><div class="card"></div>
+            <div class="card"></div><div class="card"></div><div class="card"></div><div class="card"></div><div class="card"></div><div class="card"></div>
+            <div class="card"></div><div class="card"></div><div class="card"></div><div class="card"></div><div class="card"></div><div class="card"></div>
+            <div class="card"></div><div class="card"></div><div class="card"></div><div class="card"></div><div class="card"></div><div class="card"></div>
+            <div class="card"></div><div class="card"></div><div class="card"></div><div class="card"></div><div class="card"></div><div class="card"></div>
+            <div class="card"></div><div class="card"></div><div class="card"></div><div class="card"></div><div class="card"></div><div class="card"></div>
+            <div class="card"></div><div class="card"></div><div class="card"></div><div class="card"></div><div class="card"></div><div class="card"></div>
+
+            <div class="shadow"></div>
+            <div class="center-letter">JRD</div>
+        </div>
     </div>
 
     <script>
-        const STAR_COLORS = [
-            '#0000FF'
-        ];
+        document.addEventListener('DOMContentLoaded', function() {
+            const cards = document.querySelectorAll('.card');
+            const towerRadius = 210;
+            const cardWidth = 50;
+            const cardHeight = 70;
+            const ringHeight = 33;
 
-        const BACKDROP_STAR_COUNT = 2000;
-        const BACKDROP_STAR_MAX_SPEED = 0.5;
-        const BACKDROP_STAR_MAX_RADIUS = 1;
+            cards.forEach((card, index) => {
+                const r = Math.floor(index / 72);
+                const localIndex = index % 72;
+                const i = (localIndex % 24) + 1;
+                const set = Math.floor(localIndex / 24);
 
-        const CUBE_SIDE_STAR_COUNT = 400;
-        const CUBE_SIDE_STAR_MAX_SPEED = 1.5;
-        const CUBE_SIDE_STAR_MAX_RADIUS = 1.5;
-
-        class StarScene {
-            context;
-            stars;
-            maxParticleSpeed;
-            maxParticleRadius;
-            letter;
-
-            constructor(canvas, numStars, maxParticleSpeed, maxParticleRadius, letter = null) {
-                this.context = canvas.getContext('2d');
-                this.maxParticleSpeed = maxParticleSpeed;
-                this.maxParticleRadius = maxParticleRadius;
-                this.letter = letter;
-                this.stars = this._generateStars(numStars);
-            }
-
-            _generateStars = (numStars) => {
-                let stars = [];
-                for (let i = 0; i < numStars; i++) {
-                    stars.push({
-                        x: Math.random() * this.context.canvas.width,
-                        y: Math.random() * this.context.canvas.height,
-                        vx: Math.random() * this.maxParticleSpeed * 2 - this.maxParticleSpeed,
-                        vy: Math.random() * this.maxParticleSpeed * 2 - this.maxParticleSpeed,
-                        color: STAR_COLORS[Math.floor(Math.random() * STAR_COLORS.length)]
-                    });
+                let rotateY, translateY, rotateX;
+                if (set === 0) {
+                    rotateY = ((i - 1 + r * 0.5) * 360 / 24);
+                    translateY = (r - 1.5) * (ringHeight * 2);
+                    rotateX = -20;
+                } else if (set === 1) {
+                    rotateY = ((i - 24.5 + r * 0.5) * 360 / 24);
+                    translateY = (r - 1.5) * (ringHeight * 2);
+                    rotateX = 200;
+                } else {
+                    rotateY = ((i - 48.75 + r * 0.5) * 360 / 24);
+                    translateY = (r - 2) * (ringHeight * 2);
+                    rotateX = -90;
                 }
-                return stars;
-            };
 
-            clear = () => {
-                this.context.clearRect(0, 0, this.context.canvas.width, this.context.canvas.height);
-            };
+                card.style.transform = `rotateY(${rotateY}deg) translateX(${towerRadius}px) translateY(${translateY}px) rotateX(${rotateX}deg)`;
 
-            draw = () => {
-                this.stars.forEach((star) => {
-                    this.context.fillStyle = star.color;
-                    this.context.beginPath();
-                    this.context.arc(star.x, star.y, Math.random() * this.maxParticleRadius, 0, Math.PI * 2);
-                    this.context.fill();
-                });
-                if (this.letter) {
-                    this.context.fillStyle = 'white';
-                    this.context.shadowColor = 'white';
-                    this.context.shadowBlur = 20;
-                    this.context.font = '100px Audiowide, sans-serif';
-                    this.context.textAlign = 'center';
-                    this.context.textBaseline = 'middle';
-                    this.context.fillText(this.letter, this.context.canvas.width / 2, this.context.canvas.height / 2);
-                }
-            };
-
-            update = () => {
-                this.stars.forEach((star) => {
-                    star.x += star.vx;
-                    star.y += star.vy;
-                    if (star.x < 0 || star.x > this.context.canvas.width) {
-                        star.vx *= -1;
-                    }
-                    if (star.y < 0 || star.y > this.context.canvas.height) {
-                        star.vy *= -1;
-                    }
-                });
-            };
-
-            tick = () => {
-                this.clear();
-                this.draw();
-                this.update();
-            };
-        }
-
-        class BackdropScene extends StarScene {
-            update = () => {
-                this.stars.forEach((star) => {
-                    star.x += Math.abs(star.vx);
-                    if (star.x > this.context.canvas.width) {
-                        star.x = 0;
-                    }
-                });
-            };
-        }
-
-        let backdrop = document.getElementById('backdrop');
-        backdrop.width = window.innerWidth;
-        backdrop.height = window.innerHeight;
-        let backdropScene = new BackdropScene(
-            backdrop,
-            BACKDROP_STAR_COUNT,
-            BACKDROP_STAR_MAX_SPEED,
-            BACKDROP_STAR_MAX_RADIUS
-        );
-
-        let sides = [
-            { canvas: document.getElementById('front'), letter: 'J' },
-            { canvas: document.getElementById('back'), letter: 'D' },
-            { canvas: document.getElementById('top') },
-            { canvas: document.getElementById('bottom') },
-            { canvas: document.getElementById('left') },
-            { canvas: document.getElementById('right'), letter: 'R' },
-        ].map((side) => {
-            return new StarScene(
-                side.canvas,
-                CUBE_SIDE_STAR_COUNT,
-                CUBE_SIDE_STAR_MAX_SPEED,
-                CUBE_SIDE_STAR_MAX_RADIUS,
-                side.letter
-            );
-        });
-
-        let loop = () => {
-            backdropScene.tick();
-            sides.forEach((side) => {
-                side.tick();
+                const bgX = Math.floor(Math.random() * 13) * cardWidth;
+                const bgY = Math.floor(Math.random() * 4) * cardHeight;
+                card.style.backgroundPosition = `${bgX}px ${bgY}px`;
             });
-            requestAnimationFrame(loop);
-        };
 
-        loop();
-
-        document.getElementById('cube').addEventListener('click', () => {
-            window.location.href = '{{ url("/home") }}';
+            document.body.addEventListener('click', function(e) {
+                if (e.target !== document.querySelector('.wireframe_label')) {
+                    document.body.classList.add('fade-out');
+                    setTimeout(() => {
+                        window.location.href = '/home';
+                    }, 1000);
+                }
+            });
         });
     </script>
 </body>
